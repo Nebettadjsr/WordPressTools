@@ -58,6 +58,12 @@ The project consists of **three major scripts**:
   ```
 - **WooCommerce Store** (API keys required)
 - **OpenAI API Key** for AI categorization  
+  - **How to get an OpenAI API Key:** Follow the instructions at [OpenAI API Documentation](https://platform.openai.com/signup/)
+  - **Pricing Information:** This is a **paid service**, and as of **February 2025**, using this script to process **1,000 product lines costs approximately ~$1**. OpenAI pricing may change, so check the latest rates at [OpenAI Pricing](https://openai.com/pricing).
+- **ChromeDriver** (for Selenium)
+  - Download the correct version of **chromedriver.exe** from [Chromedriver Download](https://sites.google.com/chromium.org/driver/downloads)
+  - Ensure it matches your **Chrome browser version**
+  - Place it in the project root or set the correct **path in `scraper.py`**
 
 ### 📂 **Project Structure**
 ```plaintext
@@ -67,6 +73,7 @@ The project consists of **three major scripts**:
  ├── upload_to_woocommerce.py # Uploads products via WooCommerce API
  ├── .env                     # API keys & configurations
  ├── requirements.txt         # Required Python packages
+ ├── chromedriver.exe         # Chrome WebDriver for Selenium (if using local execution)
  ├── README.md                # Project documentation
 ```
 
@@ -95,7 +102,8 @@ python ai_category.py
 ```
 #### 🔹 **Adjustments**
 - Update `CATEGORIES` in `ai_category.py` to **customize category choices**.
-- Modify the AI prompt to **generate better tags**.
+- Modify the **AI Prompt** to adjust **how categories & tags are assigned**.
+- Add or remove **predefined categories & tag rules** to better fit your product catalog.
 
 ---
 
@@ -116,17 +124,6 @@ python upload_to_woocommerce.py
 - Adjust `upload_to_woocommerce.py` to:
   - Map correct **WooCommerce fields**.
   - Auto-create **categories & attributes**.
-
----
-
-## ⚙️ Configuration & Adjustments
-| Feature | Where to Adjust |
-|---------|---------------|
-| **Target Website for Scraping** | `scraper.py` (`url = "https://example.com"`) |
-| **CSS Selectors for Product Data** | `scraper.py` (`find_element()` methods) |
-| **AI-Generated Categories & Tags** | `ai_category.py` (`CATEGORIES` & AI prompt) |
-| **WooCommerce API Credentials** | `.env` file |
-| **Custom Attributes & Variations** | `upload_to_woocommerce.py` |
 
 ---
 
