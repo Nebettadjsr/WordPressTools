@@ -71,6 +71,7 @@ The project consists of **three major scripts**:
  ├── scraper.py               # Scrapes product data & saves to CSV
  ├── ai_category.py           # Assigns AI categories & tags
  ├── upload_to_woocommerce.py # Uploads products via WooCommerce API
+ ├── missing_im.py            # Generates CSV for missing images
  ├── .env                     # API keys & configurations
  ├── requirements.txt         # Required Python packages
  ├── chromedriver.exe         # Chrome WebDriver for Selenium (if using local execution)
@@ -110,20 +111,28 @@ python ai_category.py
 ### **3️⃣ WooCommerce Upload (`upload_to_woocommerce.py`)**
 ➡️ Uploads **categorized products** to WooCommerce via API.
 
+#### 🔹 **Important Notes**
+- **WooCommerce does not allow uploading image URLs through the API**. 
+- The script will **check if an item exists by name**, assign or create an SKU, and update all other product details **except**:
+  - **Product Type**
+  - **Image URL**
+
 #### 🔹 **Run Script**
 ```sh
 python upload_to_woocommerce.py
 ```
-#### 🔹 **Adjustments**
-- Configure WooCommerce API **keys in `.env`**:
-  ```
-  WOOCOMMERCE_URL=https://yourshop.com/wp-json/wc/v3/
-  WOOCOMMERCE_CONSUMER_KEY=your_consumer_key
-  WOOCOMMERCE_CONSUMER_SECRET=your_consumer_secret
-  ```
-- Adjust `upload_to_woocommerce.py` to:
-  - Map correct **WooCommerce fields**.
-  - Auto-create **categories & attributes**.
+
+#### 🔹 **Handling Missing Images**
+If images are required, run the `missing_im.py` script:
+```sh
+python missing_im.py
+```
+This will generate a **CSV file** listing all products that exist in WooCommerce **without images**, with:
+- **Name**
+- **SKU (from WooCommerce)**
+- **Image URL** (from `products_with_ai_categories.csv`)
+
+You can then **manually upload** the CSV "products_with_missing_images.csv" to WooCommerce and match IMG URLs to their products via SKU.
 
 ---
 
